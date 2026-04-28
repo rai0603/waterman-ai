@@ -1,36 +1,104 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Waterman AI Dev Studio — 官方網站
 
-## Getting Started
+水行者運動國際有限公司 — AI 原生開發部門對外官網。
 
-First, run the development server:
+- **Production**：https://waterman-ai.cc（部署中）
+- **技術棧**：Next.js 16 + Tailwind v4 + TypeScript + 純靜態 export
+- **部署**：Cloudflare Pages
+
+## 開發
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
+npm run build    # 產生 out/ 靜態檔
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 加新內容
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+直接在 `content/<type>/` 新增 `.md` 檔，build 後自動產生路由。
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| 類型 | 路徑 | 必填 frontmatter |
+|---|---|---|
+| 部落格 | `content/blog/<slug>.md` | `title`, `slug`, `publishedAt`, `description` |
+| 手冊章節 | `content/handbook/<slug>.md` | + `chapter`, `order`, `tldr` |
+| 案例 | `content/works/<slug>.md` | + `client`, `outcome`, `techStack` |
+| 產品 | `content/products/<slug>.md` | + `url`, `status` (`live`/`beta`/`wip`) |
 
-## Learn More
+範例 frontmatter：
 
-To learn more about Next.js, take a look at the following resources:
+```yaml
+---
+title: "AI MVP 在 6 週內上線：給 PM 的最小可行路線圖"
+description: "從規格到部署的工作分解。"
+slug: "ai-mvp-6-weeks"
+publishedAt: "2026-04-28"
+updatedAt: "2026-04-28"
+author: "Rai"
+tags: ["AI MVP", "產品落地"]
+---
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 加新服務
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+改 `src/lib/services.ts` 的 `services` array。`/services/[slug]` 路由自動生成。
 
-## Deploy on Vercel
+## 部署到 Cloudflare Pages
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 第一次設定
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. **建 GitHub repo** 並 push（或用 `gh repo create`）
+2. **登入 Cloudflare Dashboard** → Workers & Pages → Create → Pages → Connect to Git
+3. **選 repo**，Production branch: `main`
+4. **Build settings**：
+   - Framework preset: `Next.js (Static HTML Export)`
+   - Build command: `npm run build`
+   - Build output directory: `out`
+   - Node.js version: `20` 或 `22`
+5. **Custom domain**：Pages project → Custom domains → 加 `waterman-ai.cc`（Cloudflare DNS 同帳號會自動 provision）
+6. **每次 push 到 main 自動 deploy**。
+
+### Contact form 後端（待實作）
+
+目前表單會 POST 到 `/api/contact` 但無對應 endpoint，會 fallback 顯示 mailto 連結。要啟用實際寄信：
+
+1. 在 repo 新建 `functions/api/contact.ts`（Cloudflare Pages Function）
+2. 整合 Resend：
+   ```typescript
+   export async function onRequestPost({ request, env }) {
+     const data = await request.json();
+     const res = await fetch("https://api.resend.com/emails", {
+       method: "POST",
+       headers: {
+         "Authorization": `Bearer ${env.RESEND_API_KEY}`,
+         "Content-Type": "application/json",
+       },
+       body: JSON.stringify({
+         from: "noreply@waterman-ai.cc",
+         to: "rai0603@gmail.com",
+         subject: `[詢價] ${data.name} from ${data.company || "—"}`,
+         text: JSON.stringify(data, null, 2),
+       }),
+     });
+     return new Response(null, { status: res.ok ? 200 : 500 });
+   }
+   ```
+3. 在 Cloudflare Pages → Settings → Environment variables 加 `RESEND_API_KEY`
+4. Resend dashboard 驗證 `waterman-ai.cc` domain（DNS 加 SPF + DKIM 紀錄）
+
+## SEO 與 AEO 檔案
+
+部署後可驗證：
+- `/sitemap.xml` ——  動態生成所有 routes
+- `/robots.txt` ——  允許所有 LLM bots
+- `/llms.txt` ——  給 LLM 抓取的網站摘要
+
+每篇文章 / 案例 / 產品 / 服務頁都有對應 JSON-LD（Article、SoftwareApplication、Service、FAQPage、TechArticle）。
+
+## 待辦
+
+- [ ] OG image `public/og/default.png`（1200×630）
+- [ ] Favicon 換成 logo mark
+- [ ] Contact form 後端（Cloudflare Pages Function + Resend）
+- [ ] 把 ai-dev-notes 內容遷移進 `content/handbook/`
+- [ ] 註冊 `waterman-ai.cc` 並設 Cloudflare DNS

@@ -131,12 +131,12 @@ export default function Home() {
               </p>
               <div className="flex flex-wrap gap-2.5">
                 {[
-                  { name: "DiDiPo", subtitle: "社群 AI 文案", color: "#6366F1", url: "https://didipo.com" },
+                  { name: "AICMS", subtitle: "AI 搜尋時代 CMS", color: "#6366F1", url: "https://ai-cms.cc" },
+                  { name: "Soma Agent", subtitle: "AI 角色夥伴 App", color: "#14B8A6", url: "https://soma-agent.com" },
+                  { name: "CitableRank", subtitle: "GEO 排名分析", color: "#06B6D4", url: "https://citablerank.com" },
                   { name: "AI-妹嘻", subtitle: "職人 AI 名片", color: "#EC4899", url: "https://ai-match.cc" },
-                  { name: "CitableRank", subtitle: "GEO 排名分析", color: "#06B6D4" },
-                  { name: "零時生存", subtitle: "災難應變問答", color: "#F59E0B" },
-                  { name: "IQ Suite", subtitle: "多測驗平台", color: "#8B5CF6" },
-                  { name: "水行者預約", subtitle: "戶外活動預約", color: "#14B8A6" },
+                  { name: "水行者裝備站", subtitle: "預購電商", color: "#F59E0B", url: "https://shop.waterman-sports.cc" },
+                  { name: "水行者預約", subtitle: "戶外活動預約", color: "#8B5CF6", url: "https://book.waterman-sports.com" },
                 ].map((p) => {
                   const Tag = p.url ? "a" : "span";
                   const props = p.url

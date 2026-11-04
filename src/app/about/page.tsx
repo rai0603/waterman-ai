@@ -31,30 +31,34 @@ const principles = [
 
 const products = [
   {
-    name: "DiDiPo",
-    desc: "AI 社群文案生成 + 自動排程，三家 6 個模型可切換。",
-    url: "https://didipo.com",
+    name: "AICMS",
+    desc: "為 AI 搜尋時代設計的多租戶 CMS，內建 AI 客服、線上預約與 MCP Gateway。",
+    url: "https://ai-cms.cc",
   },
   {
-    name: "AI-妹嘻",
-    desc: "5 分鐘生成你的 AI 專屬職人名片網站，活動場域用得最多。",
-    url: "https://ai-match.cc",
+    name: "Soma Agent",
+    desc: "會說話、有記憶的 AI 角色夥伴，桌面版與 iPhone App 都已上線。",
+    url: "https://soma-agent.com",
   },
   {
     name: "CitableRank",
-    desc: "台灣第一個繁體中文 GEO 分析平台，幫品牌進入 AI 答案前 5 名。",
+    desc: "繁體中文 GEO 分析平台，量測品牌被 AI 推薦的頻率。",
+    url: "https://citablerank.com",
   },
   {
-    name: "零時生存",
-    desc: "台灣災難應變情境問答遊戲，PWA 手機優先，玩著就學會自救。",
+    name: "AI-妹嘻",
+    desc: "聊天就能生成的職人 AI 名片網站，支援活動場域名片牆。",
+    url: "https://ai-match.cc",
   },
   {
-    name: "IQ Suite",
-    desc: "多測驗平台（智商、情商、領導力、社交⋯）—  6 個測驗已上線。",
+    name: "水行者裝備站",
+    desc: "Ozone 與 Red Paddle Co 預購電商，內建風箏、風翼、SUP 尺寸建議器。",
+    url: "https://shop.waterman-sports.cc",
   },
   {
     name: "水行者預約系統",
     desc: "自家水上活動預約，Vite + Apps Script + Google Sheet 月費 $0。",
+    url: "https://book.waterman-sports.com",
   },
 ];
 

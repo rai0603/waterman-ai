@@ -4,6 +4,9 @@ import matter from "gray-matter";
 
 export type ContentType = "blog" | "handbook" | "works" | "products";
 
+export type ProductStatus = "live" | "beta" | "wip" | "archived";
+export type ProductCategory = "platform" | "app" | "website" | "tool";
+
 export type Frontmatter = {
   title: string;
   description?: string;
@@ -13,13 +16,16 @@ export type Frontmatter = {
   author?: string;
   tags?: string[];
   ogImage?: string;
+  /** 卡片用截圖，路徑相對 public，例如 /works/aicms.webp */
+  image?: string;
   // works specific
   client?: string;
   outcome?: string;
   techStack?: string[];
   // products specific
   url?: string;
-  status?: "live" | "beta" | "wip";
+  status?: ProductStatus;
+  category?: ProductCategory;
   // handbook specific
   chapter?: string;
   order?: number;

@@ -1,17 +1,20 @@
 ---
 title: "DiDiPo：30 天上線的 AI 社群文案 SaaS"
-description: "從 idea 到付費客戶的完整時程紀錄。三家 LLM、6 個模型、自動排程、配圖生成 —— 每個技術選型背後的取捨。"
+description: "30 天從 idea 到上線的完整時程紀錄。三家 LLM、自動排程、配圖生成 —— 每個技術選型背後的取捨。專案已於 2026 年 8 月停止營運。"
 slug: "didipo-case"
 publishedAt: "2026-04-15"
-updatedAt: "2026-04-28"
+updatedAt: "2026-11-04"
+image: "/works/didipo.webp"
 author: "Rai"
 client: "自家 SaaS（內部產品）"
-outcome: "30 天上線、首月 100+ 註冊、可驗證的訂閱金流"
+outcome: "30 天完成開發上線；2026 年 8 月停止營運"
 techStack: ["Next.js", "Vite", "Supabase", "Cloudflare Pages", "Anthropic Claude", "OpenAI", "Google Gemini"]
 tags: ["SaaS", "AI 文案", "案例研究"]
 ---
 
-> **TL;DR**：DiDiPo 是水行者 AI 開發部門的第一個自有 SaaS，30 天內完成從 idea 到付費上線。三家 LLM、6 個模型可切換、Meta + Threads 自動發文 ——  本文記錄每個關鍵決策背後的取捨。
+> **專案狀態**：DiDiPo 已於 2026 年 8 月停止營運，這份紀錄保留當時的開發決策。
+
+> **TL;DR**：DiDiPo 是水行者 AI 開發部門的第一個自有 SaaS，30 天內完成從 idea 到上線。三家 LLM 多模型可切換、Meta + Threads 自動發文 ——  本文記錄每個關鍵決策背後的取捨。
 
 ## 專案背景
 
@@ -21,16 +24,15 @@ tags: ["SaaS", "AI 文案", "案例研究"]
 | 場景 | 社群小編想用 AI 寫文案 + 自動排程，但擔心被綁單一 AI |
 | 開工日 | 2026-03-08 |
 | 上線日 | 2026-04-07 |
-| 首付費客戶 | 2026-04-12 |
 
 ## 痛點與目標
 
-社群行銷團隊每月發文 200+ 篇跨 FB / IG / Threads，痛點：
+社群行銷團隊要同時經營 FB / IG / Threads，痛點：
 
 1. ChatGPT 寫得不錯但 OpenAI ToS 對商業 SaaS 限制多
 2. Claude 寫得有質感但 API 成本高
 3. Gemini 便宜但中文偶爾失準
-4. **想要：一個介面、6 個模型、按需切換**
+4. **想要：一個介面、多個模型、按需切換**
 
 ## 我們的方法
 
@@ -62,7 +64,7 @@ tags: ["SaaS", "AI 文案", "案例研究"]
 
 ### 關鍵決策
 
-**1. 為什麼 6 個模型不只 2 個？**
+**1. 為什麼要多個模型，不只 2 個？**
 
 | Slug | 模型 | 何時用 |
 |---|---|---|
@@ -77,29 +79,25 @@ tags: ["SaaS", "AI 文案", "案例研究"]
 
 **2. 為什麼自己接 Meta API 不用 Buffer？**
 
-- Buffer 月費 $15、限 10 個帳號
 - 我們直接呼叫 Meta Graph API：成本 $0、無上限
 - 換代價：要自己處理 OAuth + token refresh + webhook
 
-決策依據：客戶數量起來後 Buffer 月費會變大坑。
+決策依據：不想讓發文能力綁在第三方工具的費用與限制上。Meta App Review 最後沒有完成，發文授權只開放給測試帳號。
 
 **3. 為什麼 config.toml 全設 `verify_jwt = false`？**
 
 Supabase Edge Functions 預設驗 JWT，但我們的 OAuth callback 流程在「沒登入」狀態就要呼叫 function。改用「函式內自行驗 JWT」更彈性。
 
-## 量化成果
+## 開發成果
 
 | 指標 | 30 天內 |
 |---|---|
 | 上線時間 | 30 天（含金流規劃） |
 | Edge Functions 部署 | 4 支 |
-| 首月註冊 | 100+ |
-| 首付費 | 第 5 天 |
-| 平均 LLM 成本 / user / 月 | < NT$ 50 |
 
-## 客戶見證
+## 後來怎麼了
 
-> 「以前我用 5 個視窗切換 ChatGPT、Claude、Gemini，現在一個介面搞定。最重要的是，**我可以拿排程結果跟老闆證明 ROI**。」 ——  社群行銷小編 A
+產品沒有累積到足夠的使用者，2026 年 8 月決定停止營運。技術上跑得起來，不代表市場成立。
 
 ## 用了哪些技術棧
 

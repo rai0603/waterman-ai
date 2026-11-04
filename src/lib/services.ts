@@ -77,7 +77,7 @@ export const services: Service[] = [
       "完整可商業化的 SaaS 產品（前後台、計費、客服）",
       "上線後 6 個月的迭代與技術支援",
       "市場行銷頁（landing + pricing + blog）",
-      "金流串接（Stripe / Paddle）+ 訂閱管理",
+      "金流串接（Stripe / 綠界）+ 訂閱管理",
       "AEO / SEO 基礎建設",
     ],
     process: [

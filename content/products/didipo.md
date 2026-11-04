@@ -1,24 +1,27 @@
 ---
 title: "DiDiPo"
-description: "AI 社群文案生成 + 自動排程，三家 6 個模型可切換的多平台社群管理工具。"
+description: "AI 社群文案生成與自動排程工具，三家模型可切換。已於 2026 年 8 月停止營運，這裡留存當時的開發畫面。"
 slug: "didipo"
 publishedAt: "2026-04-07"
-updatedAt: "2026-04-28"
-url: "https://didipo.com"
-status: "live"
-tags: ["SaaS", "社群行銷", "AI 文案"]
+updatedAt: "2026-11-04"
+status: "archived"
+category: "platform"
+image: "/works/didipo.webp"
+tags: ["SaaS", "社群行銷", "已停止營運"]
 ---
 
-> **TL;DR**：DiDiPo 是給「想用 AI 寫文案但不想被綁單一供應商」的社群小編。一個介面接 OpenAI、Anthropic、Google 三家共 6 個模型，自動排程發到 FB / IG / Threads。
+> **專案狀態**：2026 年 8 月停止營運，後端已關閉，服務不再提供。
 
-## 給誰用
+> **TL;DR**：DiDiPo 是給「想用 AI 寫文案但不想被綁單一供應商」的社群小編。一個介面接 OpenAI、Anthropic、Google 三家多個模型，自動排程發到 FB / IG / Threads。
+
+## 當時的目標用戶
 
 - 自己經營品牌的個人創作者
 - 中小企業的 1 人社群行銷
 - 經營多個粉專的代理商
 - 想 A/B 測試不同 AI 模型寫法的內容團隊
 
-## 核心功能
+## 當時做了什麼
 
 ### 1. 多模型 AI 文案生成
 
@@ -55,28 +58,14 @@ tags: ["SaaS", "社群行銷", "AI 文案"]
 - Threads
 - 同時發 / 分開排程都可
 
-## 訂閱方案
-
-| 方案 | 月費 | 點數 / 月 | 帳號數 |
-|---|---|---|---|
-| Starter | NT$ 299 | 500 | 3 |
-| Pro | NT$ 799 | 2,000 | 10 |
-| Team | NT$ 1,999 | 6,000 | 30 |
-
-點數可加購（不過期）。
+Meta App Review 沒有完成，發文授權當時只開放給測試帳號。
 
 ## 技術亮點
 
 - 全靜態前端 → Cloudflare Pages，全球 CDN
-- Supabase Edge Functions 接 LLM API（Pro 方案不暫停）
+- Supabase Edge Functions 接 LLM API
 - Meta Graph API + Threads API 直接呼叫，不過 Buffer 等中間層
 - 推薦碼系統（DIDIPO + 6 碼）
-
-## 立即試用
-
-[https://didipo.com →](https://didipo.com)
-
-新註冊送 100 點數，可生成 1–2 篇貼文體驗。
 
 ## 想做類似的 SaaS？
 

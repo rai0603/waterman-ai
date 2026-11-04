@@ -1,17 +1,18 @@
 ---
-title: "AI-妹嘻：5 分鐘生成你的專屬 AI 名片網站"
+title: "AI-妹嘻：聊天生成你的專屬 AI 名片網站"
 description: "活動場域 30-50 人並發的 AI 應用，從 Phase 1 個人版到 Phase 4 場域整合的完整工程紀錄。"
 slug: "ai-match-case"
 publishedAt: "2026-04-20"
-updatedAt: "2026-04-28"
+updatedAt: "2026-11-04"
+image: "/works/ai-match.webp"
 author: "Rai"
 client: "自家 SaaS（內部產品）"
-outcome: "活動場域實測 50 人並發、ISR 砍 90% Supabase egress、聯盟行銷上線"
-techStack: ["Next.js 15", "Supabase", "Anthropic Claude", "Paddle", "Zeabur", "Cloudflare DNS"]
+outcome: "ISR 砍 90% Supabase egress、活動場域流程與聯盟行銷上線"
+techStack: ["Next.js 15", "Supabase", "Anthropic Claude", "Cloudflare"]
 tags: ["SaaS", "AI 內容生成", "案例研究"]
 ---
 
-> **TL;DR**：AI-妹嘻幫職人在 5 分鐘內生成自己的數位名片網站。從個人版做起，演進到「活動場域名片牆」 ——  本文記錄 4 個 Phase 的決策、踩坑與優化。
+> **TL;DR**：AI-妹嘻幫職人用聊天的方式生成自己的數位名片網站。從個人版做起，演進到「活動場域名片牆」 ——  本文記錄 4 個 Phase 的決策、踩坑與優化。
 
 ## 專案背景
 
@@ -21,7 +22,7 @@ tags: ["SaaS", "AI 內容生成", "案例研究"]
 | 場景 | 職人（攝影師、設計師、運動教練、業務⋯）需要「能 demo、能改、能分享」的線上名片 |
 | 開工日 | 2026-03-20 |
 | Phase 1 上線 | 2026-04-23 |
-| 網域 | ai-match.cc（Cloudflare DNS + Zeabur 部署）|
+| 網域 | ai-match.cc（部署在 Cloudflare）|
 
 ## 痛點與目標
 
@@ -30,7 +31,7 @@ tags: ["SaaS", "AI 內容生成", "案例研究"]
 - Linktree 太簡單、不夠像「網站」
 - WordPress 太複雜、要學一週
 - Notion / Webflow 要付 $10+/月
-- **想要：5 分鐘聊個天就能生成、付一次費永遠擁有**
+- **想要：聊個天就能生成**
 
 ## 我們的方法
 
@@ -56,9 +57,8 @@ tags: ["SaaS", "AI 內容生成", "案例研究"]
 
 #### Phase 2：付費系統
 
-- B2C 走 Paddle Overlay Checkout（台灣市場可接受 Paddle 介面）
+- B2C 年繳方案
 - B2B 主辦方配額 Rai 手動發放（避免做太複雜的 admin）
-- Webhook：`subscription.activated/canceled` 事件處理（踩過 `current_billing_period` 缺欄位的坑）
 
 #### Phase 3：聯盟行銷（已上線）
 
@@ -66,7 +66,7 @@ tags: ["SaaS", "AI 內容生成", "案例研究"]
 - NT$5000 門檻人工匯款
 - 所有名片底部浮水印永遠顯示（轉化漏斗 30 天觀察）
 
-#### Phase 4：活動場域名片牆（整合中）
+#### Phase 4：活動場域名片牆
 
 關鍵挑戰：**30–50 人尖峰同時生成名片，AI 不能同步阻塞**。
 
@@ -74,9 +74,6 @@ tags: ["SaaS", "AI 內容生成", "案例研究"]
 1. `/api/generate` 改成「立刻回 job_id、放到 queue」
 2. 背景 worker 跑 Claude 生成
 3. 前端 polling job 狀態
-4. 完成後 push websocket 通知
-
-預估 Phase 4.5 上線後場域可承載 100+ 並發。
 
 ## 關鍵決策紀錄
 
@@ -87,7 +84,6 @@ ISR `revalidate: 60` 對「名片頁」是完美策略：
 | | SSR | ISR 60s |
 |---|---|---|
 | Supabase egress | 每次 view 都 query | 1 分鐘 1 次 |
-| 月成本（10萬 PV） | $50+ | $5– |
 | 編輯後生效時間 | 立即 | 60 秒（搭 `revalidatePath` 立即清）|
 
 **結論：egress 砍 90%+**。對純展示型內容站，ISR 永遠優於 SSR。
@@ -116,14 +112,13 @@ LINE / FB / IG 內建瀏覽器無法跑 Google OAuth（被擋）。
 | 指標 | 數字 |
 |---|---|
 | Phase 1 上線時間 | 5 週 |
-| 活動場域實測並發 | 50 人 |
+| 活動場域設計目標 | 30–50 人尖峰 |
 | Supabase egress 優化 | 砍 90%+ |
 | 聯盟行銷漏斗 | 30 天 last-click |
-| 平均生成時間 | 4–6 分鐘對話 |
 
 ## 用了哪些技術棧
 
-`Next.js 15` `App Router` `TypeScript` `Tailwind CSS` `Supabase` `Postgres` `Anthropic Claude` `Paddle` `Zeabur` `Cloudflare DNS` `ISR` `Webhook`
+`Next.js 15` `App Router` `TypeScript` `Tailwind CSS` `Supabase` `Postgres` `Anthropic Claude` `Cloudflare` `ISR` `Webhook`
 
 ## 想做類似專案？
 

@@ -23,7 +23,7 @@ tags: ["公告", "公司"]
 四件事：
 
 1. **接案** ——  AI MVP / SaaS 共創 / 企業內部工具 / AI 顧問
-2. **養自己的 SaaS** ——  DiDiPo、AI-妹嘻、CitableRank、零時生存等
+2. **養自己的 SaaS** ——  AICMS、Soma Agent、CitableRank、AI-妹嘻等
 3. **公開方法論** ——  把所有開發手冊放在 [/handbook](/handbook)
 4. **寫部落格** ——  這裡，記錄真實案例、踩坑、決策
 

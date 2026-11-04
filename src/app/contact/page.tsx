@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/page-hero";
 import { ContactForm } from "@/components/contact-form";
+import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "聯絡 / 詢價",
@@ -12,7 +13,7 @@ const contactJsonLd = {
   "@context": "https://schema.org",
   "@type": "ContactPage",
   name: "聯絡 / 詢價",
-  url: "https://waterman-ai.cc/contact",
+  url: `${SITE_URL}/contact`,
   mainEntity: {
     "@type": "Organization",
     name: "水行者 AI 開發工作室",

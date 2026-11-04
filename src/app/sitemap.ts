@@ -1,8 +1,7 @@
 import type { MetadataRoute } from "next";
 import { listContent } from "@/lib/content";
 import { services } from "@/lib/services";
-
-const SITE_URL = "https://waterman-ai.cc";
+import { SITE_URL } from "@/lib/site";
 
 export const dynamic = "force-static";
 

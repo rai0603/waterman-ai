@@ -1,0 +1,12 @@
+{
+  "name": "waterman-ai",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./out",
+    // next.config 設了 trailingSlash，網址一律帶結尾斜線
+    "html_handling": "force-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  // custom domain 由 Cloudflare 自動建 DNS 與憑證，比照 shop.waterman-sports.cc
+  "routes": [{ "pattern": "ai.waterman-sports.cc", "custom_domain": true }]
+}

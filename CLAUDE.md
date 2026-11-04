@@ -13,14 +13,14 @@
 | 字型 | Noto Sans TC + Inter + JetBrains Mono（next/font/google） |
 | 內容 | MDX 用 gray-matter + react-markdown（不用 Velite/Contentlayer） |
 | 表單 | react-hook-form + zod |
-| 部署 | Cloudflare Pages（`output: 'export'` 純靜態）|
-| 網域 | waterman-ai.cc |
+| 部署 | Cloudflare Workers Static Assets（`output: 'export'` 純靜態，設定在 `wrangler.jsonc`）|
+| 網域 | ai.waterman-sports.cc（集中在 `src/lib/site.ts`）|
 
 ## 重要決策
 
 - **靜態 export 為主**：`next.config.ts` 設 `output: 'export'`，所有頁面 prerender 成 HTML。沒有 SSR / API routes。
 - **沒有資料庫**：純內容站，content 用 markdown 在 `content/` 下，由 `lib/content.ts` 掃描。
-- **Contact 表單後端走 Cloudflare Pages Functions**（暫未實作）：`functions/api/contact.ts` 接 Resend 寄信。表單目前 fallback：失敗顯示 mailto 連結。
+- **Contact 表單後端尚未實作**：表單目前一律走 fallback，失敗顯示 mailto 連結。Workers Static Assets 不會執行 `functions/`，要接 Resend 得改成 Worker 入口。
 - **設計風格 = C 方案**：Hero 黑底 + 內容區白底，Logo 走運動品牌風（黑底白色三叉戟）。
 - **AEO 優先**：每頁有 JSON-LD（Organization、WebSite、Service、FAQPage、TechArticle、BlogPosting、SoftwareApplication）；llms.txt 與 sitemap.xml 動態生成。
 
@@ -40,6 +40,7 @@ src/
 │   ├── markdown.tsx        # MD 渲染（含 components prop）
 │   └── contact-form.tsx    # client component
 └── lib/
+    ├── site.ts             # 正式站網址，換網域只改這裡
     ├── content.ts          # markdown scan + parse
     └── services.ts         # 4 個 service 資料
 
@@ -52,7 +53,10 @@ content/                    # markdown 內容
 直接在 `content/<type>/` 新增 .md 檔，frontmatter 必含 `title`、`slug`、`publishedAt`。
 - `handbook/` 加 `chapter`、`order`、`tldr`
 - `works/` 加 `client`、`outcome`、`techStack`
-- `products/` 加 `url`、`status`
+- `products/` 加 `status`、`category`（platform／app／website／tool）、`image`
+- 上線中的產品加 `url`；`status: "archived"` 不放 `url`，只放開發畫面截圖
+- 截圖放 `public/works/`（webp，寬 1200）。用後台截圖前先確認沒有客戶個資
+- 寫數字前要有來源，不要放查不到的註冊數、付費數或用戶見證
 
 頁面會自動掃描，generateStaticParams 自動產生 routes。Build 即可。
 
@@ -63,18 +67,15 @@ content/                    # markdown 內容
 ## 部署
 
 ```bash
-npm run build  # 產生 out/ 靜態檔
+npm run deploy  # build 後用 wrangler 部署到 ai.waterman-sports.cc
 ```
 
-Cloudflare Pages settings：
-- Build command: `npm run build`
-- Build output directory: `out`
-- Node version: 20+
-- Custom domain: `waterman-ai.cc`
+- 沒有接 Git 自動部署，push 不會上線，要跑 `npm run deploy`
+- deploy 腳本會清掉 `CLOUDFLARE_API_TOKEN`，因為 `~/.zshenv` 的 token 權限不含這個 zone，要用 wrangler OAuth 登入
 
 ## 待辦
 
-- [ ] Contact form 後端：寫 `functions/api/contact.ts`（Cloudflare Pages Function）+ Resend 整合
+- [ ] Contact form 後端：改成 Worker 入口 + Resend 整合
 - [ ] OG image：`public/og/default.png`（1200×630）—  目前 metadata 已 reference 但檔案沒生
 - [ ] favicon：`public/favicon.ico` 換成 logo mark
 - [ ] 把 ai-dev-notes 真實內容遷移進 `content/handbook/`

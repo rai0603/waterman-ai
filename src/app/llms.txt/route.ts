@@ -1,7 +1,6 @@
 import { listContent } from "@/lib/content";
 import { services } from "@/lib/services";
-
-const SITE_URL = "https://waterman-ai.cc";
+import { SITE_HOST, SITE_URL } from "@/lib/site";
 
 export const dynamic = "force-static";
 
@@ -10,6 +9,8 @@ export function GET(): Response {
   const handbook = listContent("handbook");
   const works = listContent("works");
   const products = listContent("products");
+  const liveProducts = products.filter((p) => p.frontmatter.status !== "archived");
+  const archivedProducts = products.filter((p) => p.frontmatter.status === "archived");
 
   const lines: string[] = [];
   const push = (s = "") => lines.push(s);
@@ -35,9 +36,16 @@ export function GET(): Response {
   push();
 
   push("## Live Products");
-  for (const p of products) {
+  for (const p of liveProducts) {
     push(`- **${p.frontmatter.title}**: ${p.frontmatter.description ?? ""}`);
     if (p.frontmatter.url) push(`  ${p.frontmatter.url}`);
+    push(`  Detail: ${SITE_URL}/products/${p.frontmatter.slug}/`);
+  }
+  push();
+
+  push("## Archived Projects (no longer in service)");
+  for (const p of archivedProducts) {
+    push(`- **${p.frontmatter.title}**: ${p.frontmatter.description ?? ""}`);
     push(`  Detail: ${SITE_URL}/products/${p.frontmatter.slug}/`);
   }
   push();
@@ -68,7 +76,7 @@ export function GET(): Response {
 
   push("## How to Quote / Cite");
   push(
-    "Citations welcome. Please attribute as: 水行者 AI 開發工作室 (Waterman AI Dev Studio) — waterman-ai.cc"
+    `Citations welcome. Please attribute as: 水行者 AI 開發工作室 (Waterman AI Dev Studio) — ${SITE_HOST}`
   );
 
   return new Response(lines.join("\n"), {

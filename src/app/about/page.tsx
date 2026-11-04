@@ -1,31 +1,29 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import Image from "next/image";
-import { PageHero } from "@/components/page-hero";
 import { CtaSection } from "@/components/cta-section";
+import { PageHero } from "@/components/page-hero";
 
 export const metadata: Metadata = {
   title: "關於我們",
   description:
-    "水行者 AI 開發工作室隸屬於水行者運動國際有限公司，是 2026 年成立的 AI 原生開發部門，將 AI 從工具升級為產品基底的落地工坊。",
+    "水行者 AI 開發工作室隸屬於水行者運動國際有限公司，專接客製化 AI 開發，把想法做成真的能用的產品。",
 };
 
 const principles = [
   {
-    title: "規格先行",
-    desc: "在開工前把需求收斂成可簽收的規格書。沒有規格的需求，我們不接。",
+    title: "先把需求談清楚",
+    desc: "需求還模糊也沒關係，我們會一起把它整理成做得出來的範圍。",
   },
   {
-    title: "週週可見",
-    desc: "每週 demo、每週週報、每週可改方向。不是黑盒交付。",
+    title: "過程看得見",
+    desc: "開發過程持續同步進度，方向可以邊做邊調整，不是黑盒交付。",
   },
   {
-    title: "開源精神",
-    desc: "原始碼歸客戶，技術選型優先 open standard，不綁單一供應商。",
+    title: "不綁單一供應商",
+    desc: "模型與技術依需求選擇，優先採用開放標準。",
   },
   {
     title: "公開方法論",
-    desc: "我們把開發手冊放在網站讓所有人讀，因為「能說清楚」比「能做出來」更重要。",
+    desc: "我們把開發手冊放在網站上讓所有人讀，因為能說清楚才是真的會。",
   },
 ];
 
@@ -67,191 +65,98 @@ export default function AboutPage() {
     <>
       <PageHero
         eyebrow="About"
-        title={
-          <>
-            把 AI 從工具，
-            <br className="hidden md:block" />
-            升級為產品基底。
-          </>
-        }
-        subtitle="水行者 AI 開發工作室隸屬於水行者運動國際有限公司，是 2026 年成立的 AI 原生開發部門。我們不只是把 AI 當作 SaaS 接進來，而是把它當成產品的中樞神經設計。"
-        size="tall"
-      >
-        <div className="flex items-center gap-3 mt-4">
-          <span className="grid place-items-center w-10 h-10 rounded-md bg-white/10 overflow-hidden">
-            <Image
-              src="/logo-mark.png"
-              alt=""
-              width={40}
-              height={40}
-              className="object-contain w-[78%] h-[78%]"
-            />
-          </span>
-          <div>
-            <p className="text-white/50 text-xs uppercase tracking-widest">母公司</p>
-            <p className="text-white font-semibold">水行者運動國際有限公司</p>
-          </div>
-        </div>
-      </PageHero>
+        title={<>把想法做成<br />真的能用的東西。</>}
+        subtitle="水行者 AI 開發工作室隸屬於水行者運動國際有限公司。我們專接客製化開發，也持續養著自己的產品。"
+        scene="trident"
+      />
 
-      {/* 為什麼做這個 */}
-      <section className="py-20 md:py-28">
-        <div className="mx-auto max-w-[1200px] px-4 md:px-8">
-          <div className="grid lg:grid-cols-3 gap-12 lg:gap-16">
-            <div>
-              <p className="text-sm font-semibold text-[var(--color-primary)] uppercase tracking-widest mb-3">
-                Why
-              </p>
-              <h2 className="text-3xl md:text-4xl font-bold leading-tight">
-                為什麼成立這個部門。
-              </h2>
-            </div>
-            <div className="lg:col-span-2 space-y-5 text-[var(--color-ink)] text-lg leading-relaxed">
-              <p>
-                2026 年開始，AI 已經不是「要不要用」的問題，而是「怎麼用得到位」的問題。
-              </p>
-              <p>
-                我們看到太多公司把 AI 當「外掛」 ——  接個 chatbot、塞個 GPT API，期待奇蹟自動發生。結果是：
-                <strong className="text-[var(--color-ink)]">能 demo 的很多，能上線、能維運、能賺錢的很少。</strong>
-              </p>
-              <p>
-                水行者運動國際做了十年的線下水上活動，我們知道「真實場域裡能用」跟「PPT 上能講」差多少。
-                成立 AI 開發部門，是因為我們想用同樣的「上線思維」做 AI 產品。
-              </p>
-              <p>
-                不是 prototype。是 ship。
-              </p>
-            </div>
+      <section className="panel py-20 md:py-28">
+        <div className="wrap grid lg:grid-cols-12 gap-10">
+          <div className="lg:col-span-4">
+            <p className="eyebrow mb-4">Why</p>
+            <h2 className="display text-[clamp(2.25rem,4vw,3.5rem)]">為什麼做這件事</h2>
+          </div>
+          <div className="lg:col-start-6 lg:col-span-7 space-y-5 text-lg leading-relaxed">
+            <p>AI 已經不是「要不要用」的問題，而是「怎麼用得到位」的問題。</p>
+            <p>
+              我們看到太多公司把 AI 當外掛，接個聊天機器人就期待奇蹟發生。結果是
+              <strong>能 demo 的很多，能上線、能維運的很少。</strong>
+            </p>
+            <p>
+              水行者從 2012 年開始經營線下水上活動，我們知道「真實場域裡能用」和「簡報上能講」差多少。成立 AI 開發部門，是想用同樣的務實態度做產品。
+            </p>
           </div>
         </div>
       </section>
 
-      {/* 工作原則 */}
-      <section className="py-20 md:py-24 bg-[var(--color-bg-alt)]">
-        <div className="mx-auto max-w-[1200px] px-4 md:px-8">
-          <div className="max-w-3xl mb-12">
-            <p className="text-sm font-semibold text-[var(--color-primary)] uppercase tracking-widest mb-3">
-              Principles
-            </p>
-            <h2 className="text-3xl md:text-4xl font-bold leading-tight">
-              我們的工作方式。
-            </h2>
-          </div>
-          <div className="grid md:grid-cols-2 gap-5">
-            {principles.map((p, i) => (
-              <div
-                key={p.title}
-                className="p-8 rounded-[var(--radius-lg)] bg-white border border-[var(--color-line)]"
-              >
-                <div className="font-mono text-xs text-[var(--color-muted)] mb-3">
-                  {String(i + 1).padStart(2, "0")} / {String(principles.length).padStart(2, "0")}
-                </div>
-                <h3 className="text-xl font-bold mb-3">{p.title}</h3>
-                <p className="text-[var(--color-muted)] leading-relaxed">
-                  {p.desc}
-                </p>
-              </div>
+      <section className="panel border-y border-[var(--color-line)] py-20 md:py-28">
+        <div className="wrap">
+          <p className="eyebrow mb-4">Principles</p>
+          <h2 className="display text-[clamp(2.25rem,5vw,4.5rem)] mb-12">我們的工作方式</h2>
+          <ol className="grid md:grid-cols-2 gap-x-10 lg:gap-x-16">
+            {principles.map((principle, index) => (
+              <li key={principle.title} className="border-t border-[var(--color-line)] py-6">
+                <p className="issue-no mb-2">{String(index + 1).padStart(2, "0")}</p>
+                <h3 className="text-2xl font-light tracking-wide mb-2">{principle.title}</h3>
+                <p className="text-[var(--color-muted)] leading-relaxed">{principle.desc}</p>
+              </li>
             ))}
-          </div>
+          </ol>
         </div>
       </section>
 
-      {/* 已上線產品 */}
-      <section className="py-20 md:py-24">
-        <div className="mx-auto max-w-[1200px] px-4 md:px-8">
-          <div className="max-w-3xl mb-12">
-            <p className="text-sm font-semibold text-[var(--color-primary)] uppercase tracking-widest mb-3">
-              Track Record
-            </p>
-            <h2 className="text-3xl md:text-4xl font-bold leading-tight">
-              我們做過、上過、養著的產品。
-            </h2>
-            <p className="mt-4 text-[var(--color-muted)] leading-relaxed">
-              我們不只接案，自己也養著一條 SaaS 產品線。所有方法論都是先在自家產品試過、再用在客戶身上。
-            </p>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {products.map((p) => {
-              const Tag = p.url ? "a" : "div";
-              const props = p.url
-                ? { href: p.url, target: "_blank", rel: "noopener noreferrer" as const }
-                : {};
-              return (
-                <Tag
-                  key={p.name}
-                  {...props}
-                  className="group p-6 rounded-[var(--radius-md)] bg-white border border-[var(--color-line)] hover:border-[var(--color-ink)] transition-colors block"
-                >
-                  <h3 className="font-bold text-lg mb-2 flex items-center gap-2">
-                    {p.name}
-                    {p.url && (
-                      <span
-                        aria-hidden
-                        className="text-[var(--color-muted)] group-hover:text-[var(--color-primary)] text-sm transition-colors"
-                      >
-                        ↗
-                      </span>
-                    )}
-                  </h3>
-                  <p className="text-sm text-[var(--color-muted)] leading-relaxed">
-                    {p.desc}
-                  </p>
-                </Tag>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* 創辦人 */}
-      <section className="py-20 md:py-24 bg-[var(--color-bg-alt)]">
-        <div className="mx-auto max-w-[1200px] px-4 md:px-8">
-          <div className="max-w-3xl">
-            <p className="text-sm font-semibold text-[var(--color-primary)] uppercase tracking-widest mb-3">
-              Founder
-            </p>
-            <h2 className="text-3xl md:text-4xl font-bold leading-tight mb-8">
-              主理人。
-            </h2>
-            <div className="bg-white rounded-[var(--radius-lg)] p-8 md:p-10 border border-[var(--color-line)]">
-              <div className="flex items-start gap-5 mb-6">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-accent)] grid place-items-center text-white font-bold text-2xl shrink-0">
-                  R
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold">陳建文（Rai）</h3>
-                  <p className="text-[var(--color-muted)] text-sm">
-                    水行者運動國際有限公司 · AI 開發部門主理人
-                  </p>
-                </div>
-              </div>
-              <div className="space-y-4 text-[var(--color-ink)] leading-relaxed">
-                <p>
-                  TypeScript / Node.js 為主的全端工程師。
-                  使用 Claude Code 在 30 天內上線 3 個產品（DiDiPo / AI-妹嘻 / 零時生存），2 萬行程式碼沒有一行手寫，但每一行都讀過、都負責。
-                </p>
-                <p>
-                  相信「能說清楚的方法論才是真的會」 ——  所以把開發手冊公開放在網站，所有踩過的坑都寫成可搜尋的內容。
-                </p>
-              </div>
-              <div className="mt-6 flex flex-wrap gap-3 text-sm">
+      <section className="panel py-20 md:py-28">
+        <div className="wrap">
+          <p className="eyebrow mb-4">Track Record</p>
+          <h2 className="display text-[clamp(2.25rem,5vw,4.5rem)] mb-12">自己也養著這些產品</h2>
+          <ul className="border-b border-[var(--color-line)]">
+            {products.map((product) => (
+              <li key={product.name} className="border-t border-[var(--color-line)]">
                 <a
-                  href="mailto:rai0603@gmail.com"
-                  className="text-[var(--color-primary)] hover:underline"
-                >
-                  rai0603@gmail.com
-                </a>
-                <span className="text-[var(--color-line)]">|</span>
-                <a
-                  href="https://waterman-sports.com"
+                  href={product.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[var(--color-primary)] hover:underline"
+                  className="group grid md:grid-cols-12 gap-x-8 gap-y-1 py-5 md:py-6"
                 >
-                  waterman-sports.com ↗
+                  <span className="md:col-span-5 text-2xl font-light tracking-wide group-hover:text-[var(--color-primary)] transition-colors">
+                    {product.name} <span aria-hidden className="text-lg">↗</span>
+                  </span>
+                  <span className="md:col-span-7 md:pt-1.5 leading-relaxed text-[var(--color-muted)]">
+                    {product.desc}
+                  </span>
                 </a>
-              </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className="panel border-y border-[var(--color-line)] py-20 md:py-28">
+        <div className="wrap grid lg:grid-cols-12 gap-10">
+          <div className="lg:col-span-4">
+            <p className="eyebrow mb-4">Founder</p>
+            <h2 className="display text-[clamp(2.25rem,4vw,3.5rem)]">主理人</h2>
+          </div>
+          <div className="lg:col-start-6 lg:col-span-7">
+            <h3 className="text-3xl font-light tracking-wide mb-1">陳建文（Rai）</h3>
+            <p className="text-[var(--color-muted)] mb-6">水行者運動國際有限公司 · AI 開發部門主理人</p>
+            <div className="space-y-4 text-lg leading-relaxed">
+              <p>
+                TypeScript / Node.js 為主的全端開發者。用 Claude Code 在 30 天內上線 3 個產品，2 萬行程式碼沒有一行手寫，但每一行都讀過、都負責。
+              </p>
+              <p>相信能說清楚的方法論才是真的會，所以把開發手冊公開放在網站上。</p>
             </div>
+            <p className="mt-6 flex flex-wrap gap-6">
+              <a href="mailto:rai0603@gmail.com" className="link-arrow">rai0603@gmail.com</a>
+              <a
+                href="https://waterman-sports.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="link-arrow"
+              >
+                waterman-sports.com ↗
+              </a>
+            </p>
           </div>
         </div>
       </section>

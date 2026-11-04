@@ -1,54 +1,34 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
+import { DecodeText } from "@/components/decode-text";
+import type { SceneName } from "@/lib/particles/scenes";
 
 type PageHeroProps = {
+  /** 英文標籤，以等寬字呈現 */
   eyebrow?: string;
   title: ReactNode;
   subtitle?: ReactNode;
   children?: ReactNode;
-  size?: "default" | "tall";
+  /** 這個區塊要顯示的粒子形態 */
+  scene?: SceneName;
 };
 
-export function PageHero({
-  eyebrow,
-  title,
-  subtitle,
-  children,
-  size = "default",
-}: PageHeroProps) {
+/** 內頁標題區：背景讓給粒子，標題靠左留出空間。 */
+export function PageHero({ eyebrow, title, subtitle, children, scene = "wave" }: PageHeroProps) {
   return (
-    <section className="relative overflow-hidden bg-[var(--color-ink)] text-white">
-      <div
-        aria-hidden
-        className="absolute inset-0 opacity-[0.06]"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle at 1px 1px, white 1px, transparent 0)",
-          backgroundSize: "32px 32px",
-        }}
-      />
-      <div
-        aria-hidden
-        className="absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full opacity-20 blur-3xl"
-        style={{
-          background:
-            "radial-gradient(closest-side, var(--color-primary), transparent)",
-        }}
-      />
-      <div
-        className={`relative mx-auto max-w-[1200px] px-4 md:px-8 ${
-          size === "tall" ? "pt-20 md:pt-28 pb-20 md:pb-24" : "pt-16 md:pt-24 pb-14 md:pb-20"
-        }`}
-      >
-        {eyebrow && (
-          <p className="text-xs font-semibold uppercase tracking-widest text-[#5BA0FF] mb-4">
-            {eyebrow}
-          </p>
-        )}
-        <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-bold tracking-tight leading-[1.15] max-w-3xl">
+    <section data-scene={scene} className="min-h-[72svh] flex items-end border-b border-[var(--color-line)]">
+      <div className="wrap py-14 md:py-20">
+        {eyebrow && <DecodeText text={eyebrow} className="eyebrow block mb-5" />}
+        <h1
+          className="display rise text-[clamp(2.75rem,7vw,6.5rem)] max-w-4xl"
+          style={{ "--delay": "80ms" } as CSSProperties}
+        >
           {title}
         </h1>
         {subtitle && (
-          <p className="mt-5 text-lg md:text-xl text-white/70 max-w-2xl leading-relaxed">
+          <p
+            className="rise mt-6 text-lg md:text-xl font-light leading-relaxed max-w-2xl"
+            style={{ "--delay": "200ms" } as CSSProperties}
+          >
             {subtitle}
           </p>
         )}

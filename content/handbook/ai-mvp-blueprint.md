@@ -1,5 +1,5 @@
 ---
-title: "AI MVP 藍圖：4–8 週上線的可行路線"
+title: "AI MVP 藍圖：從規格到上線的可行路線"
 description: "把一個 AI idea 收斂成可運行 MVP 的實戰時間表。"
 slug: "ai-mvp-blueprint"
 chapter: "02"
@@ -7,14 +7,14 @@ order: 2
 publishedAt: "2026-04-28"
 updatedAt: "2026-04-28"
 author: "Rai"
-tldr: "AI MVP 在 4 週內上線是可行的，前提是規格 freeze、技術選型守 KISS、上線後 30 天保固。8 週是上限，超過就要拆分案。"
+tldr: "AI MVP 能不能快速上線，關鍵在規格是否收斂、技術選型是否守 KISS。實際時程依個案範圍而定。"
 ---
 
-> **TL;DR**：AI MVP 在 4 週內上線是可行的，前提是規格 freeze、技術選型守 KISS、上線後 30 天保固。8 週是上限，超過就要拆分案。
+> **TL;DR**：AI MVP 能不能快速上線，關鍵在規格是否收斂、技術選型是否守 KISS。實際時程依個案範圍而定。
 
-## 為什麼是 4 週
+## 為什麼第一週最重要
 
-不是因為 4 週「剛好夠」，而是因為 **超過 4 週的 MVP 通常代表規格沒收斂**。
+**MVP 拖很久，通常代表規格沒收斂。**
 
 我們的觀察：
 
@@ -23,7 +23,9 @@ tldr: "AI MVP 在 4 週內上線是可行的，前提是規格 freeze、技術�
 
 差別在 W1。
 
-## 4 週時間表
+## 一個參考時程
+
+以下是小型 MVP 的參考排程，不是固定承諾，實際時程依個案範圍而定。
 
 ### Week 1：規格 freeze
 
@@ -56,27 +58,18 @@ tldr: "AI MVP 在 4 週內上線是可行的，前提是規格 freeze、技術�
 | Day 1 | 部署到 staging，full UAT |
 | Day 2-3 | 修 critical bug |
 | Day 4 | 上 prod、監控啟動 |
-| Day 5 | 交接會、文件交付、保固期開始 |
+| Day 5 | 交接會、文件交付 |
 
-### 30 天保固期
+## 哪些情況需要更長時間
 
-上線後 30 天內：
+時程拉長通常是因為：
 
-- bug 修復免費（合理範圍）
-- 24 hr 內 email 答覆
-- 每週 1 次 status check
-- 不在規格內的「新功能」走時數計費或下一個 sprint
+1. **多模型整合**（同時用 GPT + Claude + 本地模型）
+2. **資料量大需 RAG**
+3. **金流 / 合規 / 客服整合**
+4. **多語系**
 
-## 8 週版本：哪些情況需要
-
-加長到 8 週通常是因為：
-
-1. **多模型整合**（同時用 GPT + Claude + 本地模型）—— +1 週
-2. **資料量大需 RAG**（>10 萬份文件）—— +1–2 週
-3. **金流 / 合規 / 客服整合** —— +1–2 週
-4. **多語系（首發即上 zh + en + ja）** —— +1 週
-
-如果你的需求需要超過 8 週，**那就不是 MVP，是 v1 ——  該拆成 MVP + Phase 2**。
+範圍太大時，**可以拆成 MVP 和後續階段**，先上線再迭代。
 
 ## 技術選型 KISS 原則
 
@@ -86,14 +79,14 @@ tldr: "AI MVP 在 4 週內上線是可行的，前提是規格 freeze、技術�
 | 後端 | Node.js + tRPC / Hono | Python 強需求才換 |
 | 資料庫 | Supabase（Postgres + Auth + Storage 一站） | 自架需求才換 |
 | LLM | Claude Haiku 起步 | 品質不夠再換 Sonnet |
-| 部署 | Cloudflare Pages（靜態）/ Zeabur（SSR） | 規模大再上 AWS |
+| 部署 | Cloudflare | 規模大再上 AWS |
 
 **80% 的 MVP 不需要更複雜的技術棧。**
 
 ## 真實案例參考
 
-- [DiDiPo](/works/didipo-case) ——  社群 AI 文案 + 自動排程，4 週上線
-- [AI-妹嘻](/works/ai-match-case) ——  職人 AI 名片，6 週上線（含活動場域整合）
+- [DiDiPo](/works/didipo-case) ——  社群 AI 文案 + 自動排程
+- [AI-妹嘻](/works/ai-match-case) ——  職人 AI 名片，含活動場域整合
 
 ## 下一步
 

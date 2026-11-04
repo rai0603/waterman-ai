@@ -41,7 +41,7 @@ tags: ["AI MVP", "產品落地"]
 
 ## 加新服務
 
-改 `src/lib/services.ts` 的 `services` array。`/services/[slug]` 路由自動生成。
+改 `src/lib/services.ts` 的 `capabilities`，首頁與 `/services` 會自動更新。
 
 ## 部署到 Cloudflare
 
@@ -53,35 +53,9 @@ npm run deploy
 
 沒有接 Git 自動部署，push 不會上線。
 
-### Contact form 後端（待實作）
+### 詢問表單
 
-> 目前部署用 Workers Static Assets，不會執行 `functions/`。要啟用寄信得改成 Worker 入口，下方 Pages Function 範例要跟著調整。
-
-目前表單會 POST 到 `/api/contact` 但無對應 endpoint，會 fallback 顯示 mailto 連結。要啟用實際寄信：
-
-1. 在 repo 新建 `functions/api/contact.ts`（Cloudflare Pages Function）
-2. 整合 Resend：
-   ```typescript
-   export async function onRequestPost({ request, env }) {
-     const data = await request.json();
-     const res = await fetch("https://api.resend.com/emails", {
-       method: "POST",
-       headers: {
-         "Authorization": `Bearer ${env.RESEND_API_KEY}`,
-         "Content-Type": "application/json",
-       },
-       body: JSON.stringify({
-         from: "noreply@waterman-sports.cc",
-         to: "rai0603@gmail.com",
-         subject: `[詢價] ${data.name} from ${data.company || "—"}`,
-         text: JSON.stringify(data, null, 2),
-       }),
-     });
-     return new Response(null, { status: res.ok ? 200 : 500 });
-   }
-   ```
-3. 在 Cloudflare Pages → Settings → Environment variables 加 `RESEND_API_KEY`
-4. Resend dashboard 驗證 `waterman-sports.cc` domain（DNS 加 SPF + DKIM 紀錄）
+`/api/contact` 由 `worker/` 處理，用 Cloudflare `send_email` 寄到站長信箱，不需要第三方金鑰。測試：`npm test`。
 
 ## SEO 與 AEO 檔案
 
@@ -96,5 +70,4 @@ npm run deploy
 
 - [ ] OG image `public/og/default.png`（1200×630）
 - [ ] Favicon 換成 logo mark
-- [ ] Contact form 後端（Cloudflare Pages Function + Resend）
 - [ ] 把 ai-dev-notes 內容遷移進 `content/handbook/`

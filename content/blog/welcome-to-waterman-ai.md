@@ -37,10 +37,4 @@ tags: ["公告", "公司"]
 - **失敗筆記**：哪些技術選錯了？哪些客戶簽錯了？哪些功能做了沒人用？
 - **行業觀察**：每月一篇，看台灣 AI 圈在發生什麼。
 
-## 訂閱方式
-
-- RSS：`/blog/rss.xml`（即將開放）
-- Email：透過 [/contact](/contact) 表單留 email，每月一封精選
-- 直接看：常 reload [/blog](/blog) 就好
-
 歡迎來信交流：[rai0603@gmail.com](mailto:rai0603@gmail.com)

@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "deploy": "npm run build && env -u CLOUDFLARE_API_TOKEN npx wrangler@4.157.0 deploy"
+    "deploy": "npm run build && env -u CLOUDFLARE_API_TOKEN npx wrangler@4.157.0 deploy",
+    "test": "vitest run"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -18,16 +19,23 @@
     "react-hook-form": "^7.74.0",
     "react-markdown": "^10.1.0",
     "remark-gfm": "^4.0.1",
+    "three": "^0.187.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261104.1",
     "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
+    "@types/node": "^22.20.5",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/three": "^0.187.0",
+    "d3-geo": "^3.1.2",
     "eslint": "^9",
     "eslint-config-next": "16.2.4",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "topojson-client": "^3.1.0",
+    "typescript": "^5",
+    "vitest": "^5.1.0",
+    "world-atlas": "^2.0.2"
   }
 }

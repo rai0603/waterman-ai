@@ -163,4 +163,4 @@ for (const tc of testCases) {
 讀完這章，你能寫出可被驗證的 prompt。下一步建議：
 
 - [快速上手](/handbook/getting-started) ——  如果你還沒寫過第一支 LLM 程式
-- [AI MVP 藍圖](/handbook/ai-mvp-blueprint) ——  把 prompt 放進 4 週上線的時間表
+- [AI MVP 藍圖](/handbook/ai-mvp-blueprint) ——  把 prompt 放進開發時程

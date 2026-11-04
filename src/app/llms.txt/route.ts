@@ -1,5 +1,5 @@
 import { listContent } from "@/lib/content";
-import { services } from "@/lib/services";
+import { capabilities } from "@/lib/services";
 import { SITE_HOST, SITE_URL } from "@/lib/site";
 
 export const dynamic = "force-static";
@@ -18,9 +18,9 @@ export function GET(): Response {
   push("# 水行者 AI 開發工作室 (Waterman AI Dev Studio)");
   push();
   push(
-    "> 隸屬於水行者運動國際有限公司的 AI 原生開發部門。我們把 AI 從工具升級為產品基底。"
+    "> 隸屬於水行者運動國際有限公司的 AI 開發部門，專接客製化開發。"
   );
-  push("> 從一句話 idea，到上線可運作的 AI 產品。Ship AI products, not prototypes.");
+  push("> 沒有固定方案，依需求個案報價。第一次諮詢 30 分鐘免費。");
   push();
   push("## Contact");
   push("- Email: rai0603@gmail.com");
@@ -28,11 +28,11 @@ export function GET(): Response {
   push(`- Inquiry: ${SITE_URL}/contact/`);
   push();
 
-  push("## Services");
-  for (const s of services) {
-    push(`- **${s.name}** (${s.weeks}, ${s.priceRange}): ${s.shortDesc}`);
-    push(`  ${SITE_URL}/services/${s.slug}/`);
+  push("## What We Build");
+  for (const c of capabilities) {
+    push(`- **${c.title}**: ${c.desc}`);
   }
+  push(`  Details: ${SITE_URL}/services/`);
   push();
 
   push("## Live Products");

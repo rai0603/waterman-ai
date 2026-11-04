@@ -16,19 +16,13 @@ export default function BlogIndexPage() {
   return (
     <>
       <PageHero
-        eyebrow="Blog"
-        title={
-          <>
-            真實案例的決策過程，
-            <br className="hidden md:block" />
-            不是 AI 教學 medium。
-          </>
-        }
-        subtitle="我們把專案裡的決策、踩坑、改善寫下來 —— 因為「能說清楚的方法論才是真的會」。"
+        eyebrow="Journal"
+        title="部落格"
+        subtitle="把專案裡的決策和踩坑寫下來。"
       />
 
-      <section className="py-20 md:py-24">
-        <div className="mx-auto max-w-[1200px] px-4 md:px-8">
+      <section className="panel py-20 md:py-24">
+        <div className="wrap">
           {posts.length === 0 ? (
             <p className="text-[var(--color-muted)] text-center py-20">
               還沒有文章，敬請期待。
@@ -39,7 +33,7 @@ export default function BlogIndexPage() {
                 <Link
                   key={p.frontmatter.slug}
                   href={`/blog/${p.frontmatter.slug}`}
-                  className="group p-8 rounded-[var(--radius-lg)] bg-white border border-[var(--color-line)] hover:border-[var(--color-ink)] transition-all hover:shadow-lg"
+                  className="group block border-t border-[var(--color-line)] pt-6"
                 >
                   <div className="flex items-center gap-3 text-xs text-[var(--color-muted)] mb-4">
                     <time dateTime={p.frontmatter.publishedAt}>
@@ -48,7 +42,7 @@ export default function BlogIndexPage() {
                     <span>·</span>
                     <span>{readingTime(p.body)} 分鐘閱讀</span>
                   </div>
-                  <h2 className="text-2xl font-bold mb-3 leading-tight group-hover:text-[var(--color-primary)] transition-colors">
+                  <h2 className="text-2xl font-light mb-3 leading-tight group-hover:text-[var(--color-primary)] transition-colors">
                     {p.frontmatter.title}
                   </h2>
                   {p.frontmatter.description && (

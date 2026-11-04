@@ -92,7 +92,7 @@ async function summarize(text: string) {
 
 讀完這章，建議接著看：
 
-- [AI MVP 藍圖](/handbook/ai-mvp-blueprint) ——  從 idea 到 4 週上線的路線圖
+- [AI MVP 藍圖](/handbook/ai-mvp-blueprint) ——  從 idea 到上線的路線圖
 - [Prompt 工程實戰](/handbook/prompt-engineering-basics) ——  寫 prompt 的具體方法
 
 如果有 idea 但不確定怎麼開始，[寫信給我們](/contact) 聊 30 分鐘，免費。

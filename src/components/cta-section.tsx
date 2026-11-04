@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { DecodeText } from "@/components/decode-text";
 
 type CtaSectionProps = {
   title?: string;
@@ -7,40 +8,23 @@ type CtaSectionProps = {
   primaryHref?: string;
 };
 
+/** 頁尾前的行動呼籲，背景粒子聚成水行者三叉戟。 */
 export function CtaSection({
-  title = "準備好把 idea 變產品了嗎？",
-  subtitle = "30 秒留訊息，24 小時內回覆。不收諮詢費，不綁約。",
-  primaryLabel = "開始你的 AI 專案",
+  title = "開始一個專案。",
+  subtitle = "沒有固定方案，每個案子都依需求個案報價。第一次諮詢 30 分鐘免費。",
+  primaryLabel = "聊聊你的需求",
   primaryHref = "/contact",
 }: CtaSectionProps) {
   return (
-    <section className="py-20 md:py-28">
-      <div className="mx-auto max-w-[1200px] px-4 md:px-8">
-        <div className="relative overflow-hidden rounded-[var(--radius-lg)] bg-[var(--color-ink)] text-white p-10 md:p-16 text-center">
-          <div
-            aria-hidden
-            className="absolute inset-0 opacity-30"
-            style={{
-              background:
-                "radial-gradient(ellipse at top, rgba(10,108,255,0.4), transparent 60%)",
-            }}
-          />
-          <div className="relative">
-            <h2 className="text-3xl md:text-5xl font-bold mb-6 leading-tight">
-              {title}
-            </h2>
-            <p className="text-lg text-white/70 max-w-xl mx-auto mb-10">
-              {subtitle}
-            </p>
-            <Link
-              href={primaryHref}
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-white text-[var(--color-ink)] hover:bg-[var(--color-accent)] hover:text-white px-8 h-14 text-base font-semibold transition-colors"
-            >
-              {primaryLabel}
-              <span aria-hidden>→</span>
-            </Link>
-          </div>
-        </div>
+    <section data-scene="trident" className="min-h-[92svh] flex items-end md:items-center">
+      <div className="wrap py-16">
+        <DecodeText text="Transmission Open" className="eyebrow block mb-5" />
+        <h2 className="display text-[clamp(2.75rem,7vw,6.5rem)] max-w-3xl">{title}</h2>
+        <p className="mt-6 text-lg font-light leading-relaxed max-w-md">{subtitle}</p>
+        <Link href={primaryHref} className="btn mt-8">
+          {primaryLabel}
+          <span aria-hidden>→</span>
+        </Link>
       </div>
     </section>
   );

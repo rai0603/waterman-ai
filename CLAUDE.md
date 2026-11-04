@@ -2,7 +2,7 @@
 
 # 專案：Waterman AI Dev Studio 官網
 
-水行者運動國際有限公司 — AI 原生開發部門的對外官網。
+水行者運動國際有限公司 — AI 開發部門的接案網站。定位是專接客製化開發，沒有固定方案，依需求個案報價。
 
 ## 技術棧
 
@@ -10,7 +10,8 @@
 |---|---|
 | 框架 | Next.js 16 App Router (注意：不是 15，breaking change 多，寫前讀 `node_modules/next/dist/docs/`) |
 | 樣式 | Tailwind CSS v4（@theme inline，不是 v3 的 config-based） |
-| 字型 | Noto Sans TC + Inter + JetBrains Mono（next/font/google） |
+| 字型 | Noto Sans TC（細體大字與內文）+ Martian Mono（HUD 標籤）+ Syncopate（字標） |
+| 動畫 | three.js 全站粒子系統，邏輯在 `src/lib/particles/`，`engine.ts` 只在瀏覽器載入 |
 | 內容 | MDX 用 gray-matter + react-markdown（不用 Velite/Contentlayer） |
 | 表單 | react-hook-form + zod |
 | 部署 | Cloudflare Workers Static Assets（`output: 'export'` 純靜態，設定在 `wrangler.jsonc`）|
@@ -18,10 +19,14 @@
 
 ## 重要決策
 
-- **靜態 export 為主**：`next.config.ts` 設 `output: 'export'`，所有頁面 prerender 成 HTML。沒有 SSR / API routes。
+- **靜態 export 為主**：`next.config.ts` 設 `output: 'export'`，所有頁面 prerender 成 HTML。唯一的動態路徑是 `/api/contact`，由 `worker/` 處理。
 - **沒有資料庫**：純內容站，content 用 markdown 在 `content/` 下，由 `lib/content.ts` 掃描。
-- **Contact 表單後端尚未實作**：表單目前一律走 fallback，失敗顯示 mailto 連結。Workers Static Assets 不會執行 `functions/`，要接 Resend 得改成 Worker 入口。
-- **設計風格 = C 方案**：Hero 黑底 + 內容區白底，Logo 走運動品牌風（黑底白色三叉戟）。
+- **詢問表單**：`worker/` 用 Cloudflare `send_email` 寄到 rai0603@gmail.com，免第三方金鑰。需要 waterman-sports.cc 的 Email Routing 保持開啟。欄位驗證共用 `src/lib/inquiry.ts`。
+- **設計風格 = 科幻介面（FUI）**：近黑底、單一訊號橘，細線格與 HUD 標籤，參考《銀翼殺手 2049》《異星入境》與硬科技公司。Rai 否決過米白底加粗宋體的雜誌風，嫌太像 AI 生成。色彩與 `.display`、`.eyebrow`、`.btn`、`.frame`、`.panel` 在 `globals.css`；自訂類別要放在 `@layer components`，否則會蓋過 Tailwind 的 `hidden` 等 utility。
+- **粒子形態由 `data-scene` 控制**：畫面中線碰到哪個區塊，粒子就變成該形態（globe、taiwan、trident、lattice、wave、field），參數在 `scenes.ts`。文字區塊要加 `.panel` 底板避免壓到粒子。
+- **地圖資料**：`public/data/*.bin` 由 `scripts/generate-map-data.mjs` 從 Natural Earth 產生。座標只到縣市層級，不標精確地址。
+- **HUD 只放真實資料**：作品數由內容計算、台北時間、縣市座標，不放假數據。
+- **對外承諾只有「第一次諮詢 30 分鐘免費」**：不寫價格，也不寫原始碼歸屬、保固、交付時程、回覆時效。
 - **AEO 優先**：每頁有 JSON-LD（Organization、WebSite、Service、FAQPage、TechArticle、BlogPosting、SoftwareApplication）；llms.txt 與 sitemap.xml 動態生成。
 
 ## 目錄結構
@@ -42,10 +47,16 @@ src/
 └── lib/
     ├── site.ts             # 正式站網址，換網域只改這裡
     ├── content.ts          # markdown scan + parse
-    └── services.ts         # 4 個 service 資料
+    ├── inquiry.ts          # 詢問表單 schema，前後端共用
+    └── services.ts         # 能力清單、合作流程、FAQ
 
 content/                    # markdown 內容
 ├── blog/  handbook/  works/  products/
+
+worker/                     # /api/contact，其餘請求走靜態檔
+├── index.ts                # 入口與 Cloudflare binding
+├── handle-contact.ts       # 請求處理，可注入依賴測試
+└── inquiry-email.ts        # 組 MIME 信件
 ```
 
 ## 加新內容
@@ -60,9 +71,9 @@ content/                    # markdown 內容
 
 頁面會自動掃描，generateStaticParams 自動產生 routes。Build 即可。
 
-## 加新服務（services）
+## 加新能力
 
-改 `src/lib/services.ts` 的 `services` array。`/services/[slug]` 自動產生。
+改 `src/lib/services.ts` 的 `capabilities`，每一項都要有實際作品佐證。首頁與 `/services` 會自動更新。
 
 ## 部署
 
@@ -75,7 +86,6 @@ npm run deploy  # build 後用 wrangler 部署到 ai.waterman-sports.cc
 
 ## 待辦
 
-- [ ] Contact form 後端：改成 Worker 入口 + Resend 整合
 - [ ] OG image：`public/og/default.png`（1200×630）—  目前 metadata 已 reference 但檔案沒生
 - [ ] favicon：`public/favicon.ico` 換成 logo mark
 - [ ] 把 ai-dev-notes 真實內容遷移進 `content/handbook/`

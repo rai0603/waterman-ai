@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Inter, Noto_Sans_TC, JetBrains_Mono } from "next/font/google";
+import { Martian_Mono, Noto_Sans_TC, Syncopate } from "next/font/google";
+import { ParticleField } from "@/components/particle-field";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import "./globals.css";
@@ -8,19 +9,20 @@ import { SITE_URL } from "@/lib/site";
 const notoSansTC = Noto_Sans_TC({
   variable: "--font-noto-sans-tc",
   subsets: ["latin"],
-  weight: ["400", "500", "700"],
+  weight: ["200", "300", "400", "500"],
   display: "swap",
 });
 
-const inter = Inter({
-  variable: "--font-inter",
+const martianMono = Martian_Mono({
+  variable: "--font-martian-mono",
   subsets: ["latin"],
   display: "swap",
 });
 
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains-mono",
+const syncopate = Syncopate({
+  variable: "--font-syncopate",
   subsets: ["latin"],
+  weight: ["400", "700"],
   display: "swap",
 });
 
@@ -31,13 +33,14 @@ export const metadata: Metadata = {
     template: "%s ｜ 水行者 AI 開發工作室",
   },
   description:
-    "從一句話 idea，到上線可運作的 AI 產品。給新創 PM、企業 IT、想用 AI 解決工作痛點的中小企業老闆，4 週交付可運行的 AI MVP。",
+    "水行者 AI 開發工作室專接客製化開發：網站、App、AI 客服、內部系統，依需求個案報價，第一次諮詢 30 分鐘免費。",
   keywords: [
     "AI 開發",
-    "AI MVP",
-    "SaaS 共創",
-    "企業 AI 導入",
-    "AI 工作流顧問",
+    "客製化開發",
+    "AI 接案",
+    "網站開發",
+    "App 開發",
+    "AI 客服",
     "Waterman AI",
     "水行者 AI",
   ],
@@ -50,7 +53,7 @@ export const metadata: Metadata = {
     url: SITE_URL,
     siteName: "水行者 AI 開發工作室",
     title: "水行者 AI 開發工作室 Waterman AI Dev Studio",
-    description: "從一句話 idea，到上線可運作的 AI 產品。",
+    description: "專接客製化 AI 開發，依需求個案報價。",
     images: [
       {
         url: "/og/default.png",
@@ -63,7 +66,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "水行者 AI 開發工作室 Waterman AI Dev Studio",
-    description: "從一句話 idea，到上線可運作的 AI 產品。",
+    description: "專接客製化 AI 開發，依需求個案報價。",
     images: ["/og/default.png"],
   },
   robots: { index: true, follow: true },
@@ -103,7 +106,7 @@ export default function RootLayout({
   return (
     <html
       lang="zh-TW"
-      className={`${notoSansTC.variable} ${inter.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      className={`${notoSansTC.variable} ${martianMono.variable} ${syncopate.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <script
@@ -114,9 +117,12 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
-        <SiteHeader />
-        <main className="flex-1">{children}</main>
-        <SiteFooter />
+        <ParticleField />
+        <div className="relative z-10 flex min-h-screen flex-col">
+          <SiteHeader />
+          <main className="flex-1">{children}</main>
+          <SiteFooter />
+        </div>
       </body>
     </html>
   );

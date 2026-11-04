@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ArticleHero } from "@/components/article-hero";
 import { CtaSection } from "@/components/cta-section";
 import { Markdown } from "@/components/markdown";
 import {
@@ -64,50 +65,21 @@ export default async function HandbookChapterPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <article>
-        {/* 章節 Hero */}
-        <section className="relative overflow-hidden bg-[var(--color-ink)] text-white">
-          <div
-            aria-hidden
-            className="absolute inset-0 opacity-[0.06]"
-            style={{
-              backgroundImage:
-                "radial-gradient(circle at 1px 1px, white 1px, transparent 0)",
-              backgroundSize: "32px 32px",
-            }}
-          />
-          <div className="relative mx-auto max-w-3xl px-4 md:px-8 pt-16 md:pt-20 pb-12 md:pb-14">
-            <Link
-              href="/handbook"
-              className="inline-flex items-center gap-1.5 text-sm text-white/60 hover:text-white transition-colors mb-6"
-            >
-              <span aria-hidden>←</span> 回手冊目錄
-            </Link>
-            <p className="text-xs font-mono uppercase tracking-widest text-[#5BA0FF] mb-3">
-              CHAPTER {ch.frontmatter.chapter ?? "—"}
-            </p>
-            <h1 className="text-3xl md:text-5xl font-bold tracking-tight leading-tight">
-              {ch.frontmatter.title}
-            </h1>
-            {ch.frontmatter.tldr && (
-              <div className="mt-6 p-5 rounded-[var(--radius-md)] bg-white/5 border border-white/10">
-                <p className="text-sm text-white/90 leading-relaxed">
-                  <span className="font-bold text-[#5BA0FF]">TL;DR — </span>
-                  {ch.frontmatter.tldr}
-                </p>
-              </div>
-            )}
-            <div className="flex flex-wrap items-center gap-3 text-xs text-white/50 mt-6">
-              <span>{ch.frontmatter.author ?? "Rai"}</span>
-              <span>·</span>
-              <span>
-                最後更新 {formatDate(ch.frontmatter.updatedAt ?? ch.frontmatter.publishedAt)}
-              </span>
-            </div>
-          </div>
-        </section>
+        <ArticleHero
+          backHref="/handbook"
+          backLabel="回手冊目錄"
+          eyebrow={`Chapter ${ch.frontmatter.chapter ?? "—"}`}
+          title={ch.frontmatter.title}
+          description={ch.frontmatter.tldr}
+        >
+          <p className="mt-8 flex flex-wrap gap-x-3 text-sm text-[var(--color-muted)] border-t border-[var(--color-line)] pt-4">
+            <span>{ch.frontmatter.author ?? "Rai"}</span>
+            <span>最後更新 {formatDate(ch.frontmatter.updatedAt ?? ch.frontmatter.publishedAt)}</span>
+          </p>
+        </ArticleHero>
 
         {/* 內文 */}
-        <section className="py-12 md:py-16">
+        <section className="panel py-12 md:py-16">
           <div className="mx-auto max-w-3xl px-4 md:px-8">
             <Markdown>{ch.body}</Markdown>
           </div>

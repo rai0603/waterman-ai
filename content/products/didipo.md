@@ -69,6 +69,6 @@ Meta App Review 沒有完成，發文授權當時只開放給測試帳號。
 
 ## 想做類似的 SaaS？
 
-DiDiPo 全套技術棧（Vite + Supabase + Edge Functions + Cloudflare Pages）是我們 [SaaS 共創落地](/services/saas-co-build) 的標準起手式。
+DiDiPo 全套技術棧（Vite + Supabase + Edge Functions + Cloudflare Pages）是我們[客製化開發](/services)常用的起手式。
 
 [預約諮詢 →](/contact)

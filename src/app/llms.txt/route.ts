@@ -37,7 +37,8 @@ export function GET(): Response {
 
   push("## Live Products");
   for (const p of liveProducts) {
-    push(`- **${p.frontmatter.title}**: ${p.frontmatter.description ?? ""}`);
+    const beta = p.frontmatter.status === "beta" ? " (Beta)" : "";
+    push(`- **${p.frontmatter.title}**${beta}: ${p.frontmatter.description ?? ""}`);
     if (p.frontmatter.url) push(`  ${p.frontmatter.url}`);
     push(`  Detail: ${SITE_URL}/products/${p.frontmatter.slug}/`);
   }

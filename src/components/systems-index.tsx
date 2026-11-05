@@ -11,6 +11,8 @@ export type SystemRow = {
   description: string;
   href: string;
   image: string;
+  /** 狀態色點的 class */
+  statusColor: string;
 };
 
 /** 作品資料表：游標或鍵盤移到哪一列，右側就預覽哪個畫面。手機版圖片直接放在列內。 */
@@ -40,7 +42,7 @@ export function SystemsIndex({ rows }: { rows: SystemRow[] }) {
                   {row.title}
                 </span>
                 <span className="hud inline-flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-success)]" />
+                  <span className={`w-1.5 h-1.5 rounded-full ${row.statusColor}`} />
                   {row.type}
                 </span>
               </div>

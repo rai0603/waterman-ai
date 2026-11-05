@@ -5,14 +5,16 @@
   "assets": {
     "directory": "./out",
     "binding": "ASSETS",
-    // 只有詢問表單需要跑 Worker，其他請求直接走靜態檔
-    "run_worker_first": ["/api/*"],
+    // 詢問表單與影片要跑 Worker，其他請求直接走靜態檔
+    "run_worker_first": ["/api/*", "/media/*"],
     // next.config 設了 trailingSlash，網址一律帶結尾斜線
     "html_handling": "force-trailing-slash",
     "not_found_handling": "404-page"
   },
   // custom domain 由 Cloudflare 自動建 DNS 與憑證，比照 shop.waterman-sports.cc
   "routes": [{ "pattern": "ai.waterman-sports.cc", "custom_domain": true }],
+  // 影片放 R2：靜態資源有 25 MiB 上限也不支援 Range，影片也不進公開 repo
+  "r2_buckets": [{ "binding": "MEDIA", "bucket_name": "waterman-ai-media" }],
   // 需要 waterman-sports.cc 開啟 Email Routing，收件地址要先通過驗證
   "send_email": [{ "name": "INQUIRY_EMAIL", "destination_address": "rai0603@gmail.com" }],
   "ratelimits": [

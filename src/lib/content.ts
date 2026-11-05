@@ -5,7 +5,22 @@ import matter from "gray-matter";
 export type ContentType = "blog" | "handbook" | "works" | "products";
 
 export type ProductStatus = "live" | "beta" | "wip" | "archived";
-export type ProductCategory = "platform" | "app" | "website" | "tool";
+export type ProductCategory = "platform" | "app" | "hardware" | "website" | "tool";
+
+/** 產品影片。檔案放在 R2 的 videos 目錄，不進 repo。 */
+export type VideoClip = {
+  file: string;
+  title: string;
+  poster: string;
+  width: number;
+  height: number;
+  /** 影片長度，單位是秒 */
+  duration: number;
+  /** 影片完成日期，VideoObject 結構化資料必填 */
+  uploadDate: string;
+  /** 放到首頁影像區 */
+  featured?: boolean;
+};
 
 export type Frontmatter = {
   title: string;
@@ -26,6 +41,7 @@ export type Frontmatter = {
   url?: string;
   status?: ProductStatus;
   category?: ProductCategory;
+  videos?: VideoClip[];
   // handbook specific
   chapter?: string;
   order?: number;

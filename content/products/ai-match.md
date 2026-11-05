@@ -3,12 +3,21 @@ title: "AI-妹嘻"
 description: "聊天就能生成的 AI 專屬名片網站，支援活動場域名片牆。"
 slug: "ai-match"
 publishedAt: "2026-04-23"
-updatedAt: "2026-11-04"
+updatedAt: "2026-11-05"
 url: "https://ai-match.cc"
 status: "live"
 category: "platform"
 image: "/works/ai-match.webp"
 tags: ["SaaS", "個人品牌", "AI 內容生成"]
+videos:
+  - file: "ai-match-card.mp4"
+    title: "手機實錄：聊幾句就生成數位名片"
+    poster: "/works/poster-ai-match-card.webp"
+    width: 720
+    height: 1564
+    duration: 17
+    uploadDate: "2026-04-27"
+    featured: true
 ---
 
 > **TL;DR**：AI-妹嘻幫職人用聊天的方式生成自己的數位名片網站。攝影師、運動教練、設計師、業務、仲介都用得上，也支援活動場域名片牆。

@@ -15,11 +15,13 @@
 | 內容 | MDX 用 gray-matter + react-markdown（不用 Velite/Contentlayer） |
 | 表單 | react-hook-form + zod |
 | 部署 | Cloudflare Workers Static Assets（`output: 'export'` 純靜態，設定在 `wrangler.jsonc`）|
+| 影片 | R2 bucket `waterman-ai-media` 的 `videos/`，由 Worker 從同網域 `/media/` 提供 |
 | 網域 | ai.waterman-sports.cc（集中在 `src/lib/site.ts`）|
 
 ## 重要決策
 
-- **靜態 export 為主**：`next.config.ts` 設 `output: 'export'`，所有頁面 prerender 成 HTML。唯一的動態路徑是 `/api/contact`，由 `worker/` 處理。
+- **靜態 export 為主**：`next.config.ts` 設 `output: 'export'`，所有頁面 prerender 成 HTML。動態路徑只有 `/api/contact` 與 `/media/*`，由 `worker/` 處理。
+- **影片走 R2，不進 repo**：Workers 靜態資源不回 206，iPhone Safari 播不動，單檔也有 25 MiB 上限。`worker/handle-media.ts` 自己處理 Range。
 - **沒有資料庫**：純內容站，content 用 markdown 在 `content/` 下，由 `lib/content.ts` 掃描。
 - **詢問表單**：`worker/` 用 Cloudflare `send_email` 寄到 rai0603@gmail.com，免第三方金鑰。需要 waterman-sports.cc 的 Email Routing 保持開啟。欄位驗證共用 `src/lib/inquiry.ts`。
 - **設計風格 = 科幻介面（FUI）**：近黑底、單一訊號橘，細線格與 HUD 標籤，參考《銀翼殺手 2049》《異星入境》與硬科技公司。Rai 否決過米白底加粗宋體的雜誌風，嫌太像 AI 生成。色彩與 `.display`、`.eyebrow`、`.btn`、`.frame`、`.panel` 在 `globals.css`；自訂類別要放在 `@layer components`，否則會蓋過 Tailwind 的 `hidden` 等 utility。
@@ -56,6 +58,7 @@ content/                    # markdown 內容
 worker/                     # /api/contact，其餘請求走靜態檔
 ├── index.ts                # 入口與 Cloudflare binding
 ├── handle-contact.ts       # 請求處理，可注入依賴測試
+├── handle-media.ts         # /media/ 影片，處理 Range
 └── inquiry-email.ts        # 組 MIME 信件
 ```
 
@@ -64,10 +67,17 @@ worker/                     # /api/contact，其餘請求走靜態檔
 直接在 `content/<type>/` 新增 .md 檔，frontmatter 必含 `title`、`slug`、`publishedAt`。
 - `handbook/` 加 `chapter`、`order`、`tldr`
 - `works/` 加 `client`、`outcome`、`techStack`
-- `products/` 加 `status`、`category`（platform／app／website／tool）、`image`
+- `products/` 加 `status`、`category`（platform／app／hardware／website／tool）、`image`，有影片再加 `videos`
 - 上線中的產品加 `url`；`status: "archived"` 不放 `url`，只放開發畫面截圖
 - 截圖放 `public/works/`（webp，寬 1200）。用後台截圖前先確認沒有客戶個資
 - 寫數字前要有來源，不要放查不到的註冊數、付費數或用戶見證
+
+## 加新影片
+
+1. 轉成 H.264＋AAC，加 `-movflags +faststart`，文字要讀得清楚再決定解析度
+2. 上傳前逐格看過，手機錄影常帶電話、LINE ID、相簿畫面
+3. `env -u CLOUDFLARE_API_TOKEN npx wrangler@4.157.0 r2 object put waterman-ai-media/videos/檔名.mp4 --file=路徑 --content-type=video/mp4 --remote`
+4. 封面放 `public/works/poster-檔名.webp`，在產品 frontmatter 的 `videos` 補上欄位，`featured: true` 會出現在首頁
 
 頁面會自動掃描，generateStaticParams 自動產生 routes。Build 即可。
 
@@ -86,6 +96,5 @@ npm run deploy  # build 後用 wrangler 部署到 ai.waterman-sports.cc
 
 ## 待辦
 
-- [ ] OG image：`public/og/default.png`（1200×630）—  目前 metadata 已 reference 但檔案沒生
 - [ ] favicon：`public/favicon.ico` 換成 logo mark
 - [ ] 把 ai-dev-notes 真實內容遷移進 `content/handbook/`

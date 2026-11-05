@@ -3,14 +3,17 @@ import Link from "next/link";
 import { CtaSection } from "@/components/cta-section";
 import { DecodeText } from "@/components/decode-text";
 import { HudClock } from "@/components/hud-clock";
+import { getStatusLabel } from "@/components/product-card";
 import { SystemsIndex, type SystemRow } from "@/components/systems-index";
+import { VideoGallery, type GalleryItem } from "@/components/video-gallery";
 import { listContent, type ProductCategory } from "@/lib/content";
 import { capabilities, processSteps } from "@/lib/services";
 
-const categoryOrder: ProductCategory[] = ["platform", "app", "website", "tool"];
+const categoryOrder: ProductCategory[] = ["platform", "app", "hardware", "website", "tool"];
 const categoryLabel: Record<ProductCategory, string> = {
   platform: "Platform",
   app: "App",
+  hardware: "Hardware",
   website: "Web",
   tool: "Tool",
 };
@@ -19,11 +22,12 @@ const delay = (ms: number) => ({ "--delay": `${ms}ms` }) as CSSProperties;
 
 export default function HomePage() {
   const products = listContent("products");
-  const live = products.filter((p) => p.frontmatter.status !== "archived");
-  const archivedCount = products.length - live.length;
+  const active = products.filter((p) => p.frontmatter.status !== "archived");
+  const liveCount = products.filter((p) => p.frontmatter.status === "live").length;
+  const archivedCount = products.length - active.length;
 
   const rows: SystemRow[] = categoryOrder
-    .flatMap((category) => live.filter((p) => p.frontmatter.category === category))
+    .flatMap((category) => active.filter((p) => p.frontmatter.category === category))
     .map((product, index) => ({
       id: `W-${String(index + 1).padStart(2, "0")}`,
       title: product.frontmatter.title,
@@ -31,7 +35,17 @@ export default function HomePage() {
       description: product.frontmatter.description ?? "",
       href: `/products/${product.frontmatter.slug}`,
       image: product.frontmatter.image ?? "",
+      statusColor: getStatusLabel(product.frontmatter.status).color,
     }));
+
+  const footage: GalleryItem[] = products.flatMap((product) =>
+    (product.frontmatter.videos ?? [])
+      .filter((clip) => clip.featured)
+      .map((clip) => ({
+        clip,
+        link: { href: `/products/${product.frontmatter.slug}`, label: `看 ${product.frontmatter.title}` },
+      }))
+  );
 
   return (
     <>
@@ -66,7 +80,7 @@ export default function HomePage() {
           <dl className="hud grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-2 border-t border-[var(--color-line)] pt-4">
             <div>
               <dt className="inline">Live Systems </dt>
-              <dd className="inline text-[var(--color-ink)]">{String(live.length).padStart(2, "0")}</dd>
+              <dd className="inline text-[var(--color-ink)]">{String(liveCount).padStart(2, "0")}</dd>
             </div>
             <div>
               <dt className="inline">Archived </dt>
@@ -112,6 +126,15 @@ export default function HomePage() {
             全部作品
             <span aria-hidden>→</span>
           </Link>
+        </div>
+      </section>
+
+      {/* 實際操作影片 */}
+      <section data-scene="field" className="panel border-b border-[var(--color-line)] py-20 md:py-28">
+        <div className="wrap">
+          <DecodeText text="Footage" className="eyebrow block mb-4" />
+          <h2 className="display text-[clamp(2.25rem,5vw,4.5rem)] mb-10 md:mb-14">實際用起來的樣子。</h2>
+          <VideoGallery items={footage} />
         </div>
       </section>
 

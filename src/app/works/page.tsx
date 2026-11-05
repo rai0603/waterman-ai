@@ -19,6 +19,7 @@ export const metadata: Metadata = {
 const categorySections: { key: ProductCategory; title: string }[] = [
   { key: "platform", title: "平台與 SaaS" },
   { key: "app", title: "App" },
+  { key: "hardware", title: "實體機台" },
   { key: "website", title: "網站" },
   { key: "tool", title: "開源工具" },
 ];

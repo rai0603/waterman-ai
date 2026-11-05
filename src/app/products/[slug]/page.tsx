@@ -6,7 +6,10 @@ import { ArticleHero } from "@/components/article-hero";
 import { CtaSection } from "@/components/cta-section";
 import { Markdown } from "@/components/markdown";
 import { getStatusLabel } from "@/components/product-card";
+import { VideoGallery } from "@/components/video-gallery";
 import { getContent, listSlugs, formatDate } from "@/lib/content";
+import { SITE_URL } from "@/lib/site";
+import { toIsoDuration, videoPath } from "@/lib/video";
 
 type Params = { slug: string };
 
@@ -39,6 +42,18 @@ export default async function ProductDetailPage({
 
   const isArchived = p.frontmatter.status === "archived";
   const label = getStatusLabel(p.frontmatter.status);
+  const videos = p.frontmatter.videos ?? [];
+
+  const videoJsonLd = videos.map((clip) => ({
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    name: clip.title,
+    description: p.frontmatter.description,
+    thumbnailUrl: `${SITE_URL}${clip.poster}`,
+    contentUrl: `${SITE_URL}${videoPath(clip.file)}`,
+    uploadDate: clip.uploadDate,
+    duration: toIsoDuration(clip.duration),
+  }));
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -53,7 +68,7 @@ export default async function ProductDetailPage({
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify([jsonLd, ...videoJsonLd]) }}
       />
       <article>
         <ArticleHero
@@ -88,6 +103,15 @@ export default async function ProductDetailPage({
             {p.frontmatter.tags && <span>{p.frontmatter.tags.join(" · ")}</span>}
           </p>
         </ArticleHero>
+
+        {videos.length > 0 && (
+          <section className="panel pt-12 md:pt-16">
+            <div className="wrap">
+              <p className="eyebrow mb-6">Footage</p>
+              <VideoGallery items={videos.map((clip) => ({ clip }))} />
+            </div>
+          </section>
+        )}
 
         {/* 內文 */}
         <section className="panel py-12 md:py-16">

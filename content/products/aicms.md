@@ -3,12 +3,21 @@ title: "AICMS"
 description: "為 AI 搜尋時代設計的多租戶 CMS：內容自動轉成 AI 讀得懂的結構，內建 AI 客服、線上預約與 MCP Gateway。"
 slug: "aicms"
 publishedAt: "2026-05-12"
-updatedAt: "2026-11-04"
+updatedAt: "2026-11-05"
 url: "https://ai-cms.cc"
 status: "live"
 category: "platform"
 image: "/works/aicms.webp"
 tags: ["SaaS", "CMS", "GEO", "AI 客服"]
+videos:
+  - file: "aicms-promo.mp4"
+    title: "AICMS 功能總覽：從被 AI 找到到現場報到"
+    poster: "/works/poster-aicms-promo.webp"
+    width: 1080
+    height: 1172
+    duration: 38
+    uploadDate: "2026-05-26"
+    featured: true
 ---
 
 > **TL;DR**：WordPress 是為「給人看」設計的，AICMS 從架構層就為「被 AI 引用」設計。同一個後台管內容、管預約、管排班，訪客可以在對話裡直接完成下單。

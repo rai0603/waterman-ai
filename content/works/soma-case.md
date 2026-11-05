@@ -3,7 +3,7 @@ title: "Soma Agent 開發紀錄：從網站客服角色到 iPhone App"
 description: "AICMS 的 Live2D 客服，後來長成桌面夥伴、iPhone App 與場館導覽機台。這份紀錄整理同一個角色引擎的三種產品形態。"
 slug: "soma-case"
 publishedAt: "2026-11-04"
-updatedAt: "2026-11-04"
+updatedAt: "2026-11-05"
 author: "Rai"
 image: "/works/soma-agent.webp"
 client: "自家產品"
@@ -46,7 +46,13 @@ iPhone 版改成代管 AI，使用者裝好就能聊，不需要自己申請金�
 
 ### 場館導覽機台
 
-同一份核心打包成 iPad 版，放在場館裡當導覽員。機台不帶任何 AI 金鑰，問答走 [AICMS 知識庫](/works/aicms-case)，內容由場館在後台維護。
+同一份核心打包成 iPad 版，放在場館裡當導覽員。訪客在 iPad 上開口或打字，大電視同步顯示角色和回答。機台不帶任何 AI 金鑰，問答走 [AICMS 知識庫](/works/aicms-case)，內容由場館在後台維護。
+
+![機台的電視展示面](/works/soma-kiosk-tv.webp)
+
+電視用 HDMI 接在 iPad 上。iPadOS 預設只會鏡像畫面，所以我們在 Rust 層開第二個視窗，載入 iPad 本機伺服器上的展示頁，兩個畫面的同步走本機迴路，不經過網路。
+
+[看 SOMA AI 導覽機台介紹 →](/products/soma-kiosk)
 
 ## 技術決策
 

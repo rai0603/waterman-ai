@@ -50,11 +50,11 @@ export const capabilities: Capability[] = [
     ],
   },
   {
-    title: "互動內容與 3D",
-    desc: "互動教材、資料視覺化、虛擬角色。",
+    title: "實體機台與 3D 互動",
+    desc: "場館導覽機台、虛擬角色、互動教材。",
     proof: [
+      { label: "SOMA AI 導覽機台", href: "/products/soma-kiosk" },
       { label: "食 · 日月之間", href: "/products/eclipse-explainer" },
-      { label: "Soma Agent", href: "/products/soma-agent" },
     ],
   },
   {

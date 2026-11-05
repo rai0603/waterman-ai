@@ -3,7 +3,7 @@ title: "AICMS 功能開發紀錄：一個 CMS 怎麼長成 AI 商務平台"
 description: "從內容管理、AI 客服、線上預約到 MCP Gateway，這份紀錄整理 AICMS 的功能模組與開發順序。"
 slug: "aicms-case"
 publishedAt: "2026-11-04"
-updatedAt: "2026-11-04"
+updatedAt: "2026-11-05"
 author: "Rai"
 image: "/works/aicms-plugins.webp"
 client: "自家平台"
@@ -94,7 +94,7 @@ GA4 不適合跨租戶使用，所以我們自己做了一套。除了社群和�
 
 ### 場館導覽機台
 
-[Soma 導覽機台](/works/soma-case)的問答走 AICMS 知識庫。訪客問附近有什麼好玩的，回覆會帶地點卡片和導航 QR。平台策展的地點庫和租戶自己的知識庫分開檢索，問課程時不會撈到景點。
+[SOMA AI 導覽機台](/products/soma-kiosk)的問答走 AICMS 知識庫。開通地點推薦的場館，訪客問附近有什麼好玩的，回覆會帶地點卡片和導航 QR。平台策展的地點庫和租戶自己的知識庫分開檢索，問課程時不會撈到景點。
 
 ## 開發時間軸
 
